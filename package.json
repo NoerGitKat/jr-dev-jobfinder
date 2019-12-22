@@ -4,7 +4,9 @@
   "description": "An app that pulls data from Indeed/GitHub/StackOverflow to easily access all Junior Dev jobs in one place!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./server/server.js",
+    "server": "nodemon ./server/server.js",
+    "client": "cd client && npm start"
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,11 @@
   "homepage": "https://github.com/NoerGitKat/jr-dev-jobfinder#readme",
   "dependencies": {
     "cron": "^1.7.2",
+    "express": "^4.17.1",
     "node-fetch": "^2.6.0",
     "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }
