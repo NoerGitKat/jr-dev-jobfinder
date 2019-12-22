@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/NoerGitKat/jr-dev-jobfinder/issues"
   },
-  "homepage": "https://github.com/NoerGitKat/jr-dev-jobfinder#readme"
+  "homepage": "https://github.com/NoerGitKat/jr-dev-jobfinder#readme",
+  "dependencies": {
+    "cron": "^1.7.2",
+    "node-fetch": "^2.6.0",
+    "redis": "^2.8.0"
+  }
 }
