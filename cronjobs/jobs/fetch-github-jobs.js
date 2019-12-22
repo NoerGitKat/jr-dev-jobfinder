@@ -1,9 +1,10 @@
 const fetch = require("node-fetch");
 const { setRedisData } = require("./../../caching");
+const filterGithubJobs = require("./../utils/filterGithubJobs");
 
 const BASE_URL = "https://jobs.github.com/positions.json";
 
-const fetchGithub = async () => {
+const fetchGithubJobs = async () => {
   try {
     // Initial value
     let jobResults = 1;
@@ -17,10 +18,10 @@ const fetchGithub = async () => {
       allJobs.push(...jobs);
       onPage++;
     }
-
     console.log("Fetched ", allJobs.length, " jobs in total!");
+    const jrJobs = filterGithubJobs(allJobs);
 
-    const stringifiedJobs = JSON.stringify(allJobs);
+    const stringifiedJobs = JSON.stringify(jrJobs);
     const setDataSucces = await setRedisData("Github Jobs", stringifiedJobs);
     console.log(setDataSucces);
   } catch (err) {
@@ -28,4 +29,4 @@ const fetchGithub = async () => {
   }
 };
 
-module.exports = fetchGithub;
+module.exports = fetchGithubJobs;
