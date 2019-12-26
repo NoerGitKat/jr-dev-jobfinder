@@ -6,4 +6,17 @@
 	margin: 20px 0;
 	padding: 20px 10px;
 	align-items: center;
+	transition: all 1s ease;
+}
+
+.singleJob:hover {
+	cursor: pointer;
+}
+
+.detailLogo {
+	width: 100%;
+}
+
+.detailLogo img {
+	width: 100px;
 }

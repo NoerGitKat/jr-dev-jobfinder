@@ -1,23 +1,44 @@
 import React, { useState } from 'react';
+
 import Typography from '@material-ui/core/Typography';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+
 import SingleJob from './SingleJob';
+import JobModal from './JobModal';
 
 const Jobs = ({ allJobs }) => {
+	const [activeStep, setActiveStep] = useState(0);
+	const [modalOpened, setModalOpened] = useState(false);
+	const [singleJob, setSingleJob] = useState({});
+
 	// Show 50 jobs per page
 	const numOfSteps = Math.ceil(allJobs.length / 50);
 
-	const [activeStep, setActiveStep] = useState(0);
+	// Paginate number of jobs shown
+	const jobsPerPage = allJobs.slice(activeStep * 50, activeStep * 50 + 50);
 
+	// Stepper
 	const handleNext = () => {
 		setActiveStep(prevActiveStep => prevActiveStep + 1);
 	};
 
 	const handleBack = () => {
 		setActiveStep(prevActiveStep => prevActiveStep - 1);
+	};
+
+	// Toggle modal
+	const toggleModal = () => {
+		setModalOpened(prevState => {
+			return !prevState;
+		});
+	};
+
+	const handleModalClick = singleJob => {
+		setSingleJob(singleJob);
+		toggleModal();
 	};
 
 	return (
@@ -28,8 +49,8 @@ const Jobs = ({ allJobs }) => {
 			<Typography variant="h6" component="h2">
 				Found {allJobs.length} jobs:
 			</Typography>
-			{allJobs.map((job, i) => (
-				<SingleJob key={`${job.title + i}`} job={job} />
+			{jobsPerPage.map((job, i) => (
+				<SingleJob key={`${job.title + i}`} job={job} handleModalClick={handleModalClick} />
 			))}
 			<div>
 				Page {activeStep + 1} of {numOfSteps}
@@ -53,6 +74,7 @@ const Jobs = ({ allJobs }) => {
 					</Button>
 				}
 			/>
+			<JobModal modalOpened={modalOpened} toggleModal={toggleModal} singleJob={singleJob} />
 		</div>
 	);
 };
